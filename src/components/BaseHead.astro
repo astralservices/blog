@@ -51,7 +51,27 @@ const { title, description, icon, socialImage } = Astro.props;
   }
 
   article > main > p > a {
-    @apply text-blue-400 animated-underline font-semibold;
+    @apply text-green-500 animated-underline font-semibold;
+  }
+
+  .kg-card {
+    @apply w-full grid gap-y-1;
+  }
+
+  .kg-image-card {
+    @apply w-full justify-center;
+  }
+
+  .kg-card-hascaption > figcaption {
+    @apply text-center text-gray-500 text-sm;
+  }
+
+  .kg-align-center {
+    @apply justify-center;
+  }
+
+  .kg-btn {
+    @apply px-3 py-2 bg-astral rounded-md;
   }
 </style>
 
