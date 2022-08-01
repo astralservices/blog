@@ -3,12 +3,13 @@ export interface Props {
   title: string;
   description: string;
   icon: string;
+  socialImage: string;
 }
 
 import Prefetch from "@julian_cataldo/astro-prefetch/Prefetch.astro";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const { title, description, icon } = Astro.props;
+const { title, description, icon, socialImage } = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -26,14 +27,14 @@ const { title, description, icon } = Astro.props;
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content="https://astro.build/social.png" />
+<meta property="og:image" content={socialImage} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content="https://astro.build/social.png" />
+<meta property="twitter:image" content={socialImage} />
 
 <Prefetch max={8} />
 

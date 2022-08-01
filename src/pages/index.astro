@@ -22,7 +22,12 @@ const posts = await api.posts.browse({
 
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} icon={icon} />
+    <BaseHead
+      title={title}
+      description={description}
+      icon={icon}
+      socialImage={blog.og_image}
+    />
   </head>
 
   <body class="dark:bg-black-200 bg-gray-100">

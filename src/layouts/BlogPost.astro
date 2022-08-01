@@ -10,13 +10,18 @@ export interface Props {
 
 const {
   content: { title, excerpt, published_at, feature_image, authors, plaintext },
-  settings: { icon, title: siteTitle },
+  settings: { icon, title: siteTitle, og_image },
 } = Astro.props as Props;
 ---
 
 <html>
   <head>
-    <BaseHead title={title} description={excerpt} icon={icon} />
+    <BaseHead
+      title={title}
+      description={excerpt}
+      icon={icon}
+      socialImage={og_image}
+    />
 
     <link rel="stylesheet" href="/css/prism.css" />
     <link rel="stylesheet" href="/css/post.css" />
@@ -24,7 +29,7 @@ const {
 
   <body class="dark:bg-black-200 bg-gray-100">
     <Header title={siteTitle} icon={icon} />
-    <article class="mx-auto max-w-3xl px-4 space-y-2">
+    <article class="mx-auto max-w-3xl px-4 space-y-4">
       <header class="space-y-2">
         {feature_image && (
           <img
@@ -63,7 +68,7 @@ const {
           </p>
         </div>
       </header>
-      <main class="dark:text-white text-lg">
+      <main class="dark:text-white text-lg space-y-6 font-serif">
         <slot />
       </main>
     </article>
