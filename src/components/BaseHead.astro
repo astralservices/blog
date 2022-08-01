@@ -49,6 +49,10 @@ const { title, description, icon, socialImage } = Astro.props;
   .animated-underline {
     @apply bg-gradient-to-r from-astral-600 to-astral bg-[length:0px_6px] bg-left-bottom bg-no-repeat transition-[background-size] motion-reduce:bg-[length:100%_6px] motion-reduce:transition-none duration-500 motion-safe:hover:bg-[length:100%_6px];
   }
+
+  article > main > p > a {
+    @apply text-blue-400 animated-underline font-semibold;
+  }
 </style>
 
 <noscript> </noscript><img
