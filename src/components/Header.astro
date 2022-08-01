@@ -1,0 +1,24 @@
+---
+export interface Props {
+  title: string;
+  icon: string;
+}
+
+const props = Astro.props as Props;
+---
+
+<header class="mx-auto max-w-3xl px-4 py-14">
+  <nav>
+    <a href="/" class="flex items-center space-x-4">
+      <img
+        src={props.icon}
+        width="64px"
+        class="w-16"
+        alt={props.title + " Icon"}
+      />
+      <span class="dark:text-white font-black text-xl animated-underline"
+        >{props.title}
+      </span>
+    </a>
+  </nav>
+</header>

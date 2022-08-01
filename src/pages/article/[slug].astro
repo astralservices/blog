@@ -1,0 +1,38 @@
+---
+import GhostContentAPI, { PostOrPage, Settings } from "@tryghost/content-api";
+import BlogPost from "../../layouts/BlogPost.astro";
+
+export async function getStaticPaths() {
+  const api = new GhostContentAPI({
+    url: import.meta.env.GHOST_URL,
+    key: import.meta.env.GHOST_KEY,
+    version: "v5.0",
+  });
+
+  const posts = await api.posts.browse({
+    include: ["tags", "authors"],
+    formats: ["html", "plaintext"],
+  });
+
+  const settings = await api.settings.browse({
+    fields: ["title", "description", "logo", "cover_image", "lang"],
+  });
+
+  return posts.map((post) => {
+    return {
+      params: {
+        slug: post.slug,
+      },
+      props: {
+        post,
+        settings,
+      },
+    };
+  });
+}
+
+const post = Astro.props.post as PostOrPage;
+const settings = Astro.props.settings as Settings;
+---
+
+<BlogPost content={post} settings={settings} set:html={post.html} />

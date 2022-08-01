@@ -1,0 +1,63 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+import Prefetch from "@julian_cataldo/astro-prefetch/Prefetch.astro";
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const { title, description, icon } = Astro.props;
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content="https://astro.build/social.png" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content="https://astro.build/social.png" />
+
+<Prefetch max={8} />
+
+<!-- Fonts -->
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+
+<!-- Icon -->
+<link rel="icon" href={icon} type="image/x-icon" />
+
+<!-- Styles -->
+<style is:global>
+  .animated-underline {
+    @apply bg-gradient-to-r from-astral-600 to-astral bg-[length:0px_6px] bg-left-bottom bg-no-repeat transition-[background-size] motion-reduce:bg-[length:100%_6px] motion-reduce:transition-none duration-500 motion-safe:hover:bg-[length:100%_6px];
+  }
+</style>
+
+<noscript> </noscript><img
+  src="https://shy.maatt.ch/ingress/5bad3fba-8968-486b-a60c-7e8719ad2c1d/pixel.gif"
+/>
+
+<script
+  defer
+  src="https://shy.maatt.ch/ingress/5bad3fba-8968-486b-a60c-7e8719ad2c1d/script.js"
+  type="text/partytown"
+>
+
+</script>

@@ -1,0 +1,75 @@
+---
+import { PostOrPage, Settings } from "@tryghost/content-api";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+
+export interface Props {
+  content: PostOrPage;
+  settings: Settings;
+}
+
+const {
+  content: { title, excerpt, published_at, feature_image, authors, plaintext },
+  settings: { icon, title: siteTitle },
+} = Astro.props as Props;
+---
+
+<html>
+  <head>
+    <BaseHead title={title} description={excerpt} icon={icon} />
+
+    <link rel="stylesheet" href="/css/prism.css" />
+    <link rel="stylesheet" href="/css/post.css" />
+  </head>
+
+  <body class="dark:bg-black-200 bg-gray-100">
+    <Header title={siteTitle} icon={icon} />
+    <article class="mx-auto max-w-3xl px-4 space-y-2">
+      <header class="space-y-2">
+        {feature_image && (
+          <img
+            width="720"
+            height="420"
+            loading="lazy"
+            src={feature_image}
+            alt={title}
+            class="rounded-md dark:shadow-none shadow-md"
+          />
+        )}
+        <h1 class="dark:text-white font-black text-4xl">{title}</h1>
+        <div
+          class="flex items-center divide-x dark:divide-black-300 divide-gray-300"
+        >
+          <p class="pr-2">
+            {authors.map((author) => (
+              <a
+                href={"/author/" + author.slug}
+                class="dark:text-gray-300 animated-underline text-gray-500 font-semibold text-sm"
+              >
+                {author.name}
+              </a>
+            ))}
+          </p>
+          <time
+            datetime={published_at}
+            class="dark:text-gray-300 text-gray-500 font-semibold text-sm px-2"
+          >
+            {new Date(published_at).toLocaleDateString("en-US")}
+          </time>
+          <p
+            class="pl-2 dark:text-gray-300 text-gray-500 font-semibold text-sm"
+          >
+            {Math.ceil(plaintext.split(" ").length / 200)} min read
+          </p>
+        </div>
+      </header>
+      <main class="dark:text-white text-lg">
+        <slot />
+      </main>
+    </article>
+
+    <script src="/js/prism.js" is:inline type="text/partytown">
+
+    </script>
+  </body>
+</html>

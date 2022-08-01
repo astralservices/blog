@@ -1,0 +1,68 @@
+---
+import GhostContentAPI, { Author } from "@tryghost/content-api";
+import BaseHead from "../../components/BaseHead.astro";
+import BlogPostPreview from "../../components/BlogPostPreview.astro";
+import Header from "../../components/Header.astro";
+
+const api = new GhostContentAPI({
+  url: import.meta.env.GHOST_URL,
+  key: import.meta.env.GHOST_KEY,
+  version: "v5.0",
+});
+
+export async function getStaticPaths() {
+  const api = new GhostContentAPI({
+    url: import.meta.env.GHOST_URL,
+    key: import.meta.env.GHOST_KEY,
+    version: "v5.0",
+  });
+
+  const authors = await api.authors.browse();
+
+  return authors.map((author) => {
+    return {
+      params: {
+        slug: author.slug,
+      },
+      props: {
+        author,
+      },
+    };
+  });
+}
+
+const author = Astro.props.author as Author;
+const posts = await api.posts.browse({ filter: `author:${author.slug}` });
+const settings = await api.settings.browse();
+---
+
+<html lang="en">
+  <head>
+    <BaseHead
+      title={settings.title}
+      description={settings.description}
+      icon={settings.icon}
+    />
+  </head>
+
+  <body class="dark:bg-black-200 bg-gray-100">
+    <Header title={`Posts by ${author.name}`} icon={settings.icon} />
+    <div class="mx-auto max-w-3xl px-4">
+      <main>
+        <section
+          aria-label="Blog post list"
+          class="divide-y dark:divide-black-400 divide-gray-400"
+        >
+          {posts.map((post) => (
+            <BlogPostPreview
+              title={post.title}
+              description={post.excerpt}
+              publishDate={post.published_at}
+              url={"/article/" + post.slug}
+            />
+          ))}
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
